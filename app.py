@@ -113,10 +113,13 @@ def stream():
 
             # Display the resulting image
             cv2.imshow('Video', frame)
+            cv2.imwrite('vid.jpg', frame)
+            yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + open('vid.jpg', 'rb').read() + b'\r\n')
 
             # Hit 'q' on the keyboard to quit!
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
+                
         except Exception as e:
             print(str(e))
 
