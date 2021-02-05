@@ -11,7 +11,7 @@
     <div>
         <h1>Canvas</h1>
         <canvas id="canvas" width="640px" height="480px"></canvas>
-        
+
         <div id="container">
           <video autoplay="true" id="videoElement">
           
@@ -35,6 +35,8 @@
     var ctx = document.getElementById("canvas").getContext('2d');
     var img = new Image();
     img.src = "{{ url_for('video_feed') }}";
+
+    alert(img.src)
 
     // need only for static image
     //img.onload = function(){   

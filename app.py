@@ -119,7 +119,7 @@ def stream():
             # Hit 'q' on the keyboard to quit!
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-                
+
         except Exception as e:
             print(str(e))
 
