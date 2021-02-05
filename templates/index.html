@@ -11,9 +11,27 @@
     <div>
         <h1>Canvas</h1>
         <canvas id="canvas" width="640px" height="480px"></canvas>
+        
+        <div id="container">
+          <video autoplay="true" id="videoElement">
+          
+          </video>
+        </div>        
     </div>
 
 <script >
+    var video = document.querySelector("#videoElement");
+
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+          video.srcObject = stream;
+        })
+        .catch(function (err0r) {
+          console.log("Something went wrong!");
+        });
+    }
+
     var ctx = document.getElementById("canvas").getContext('2d');
     var img = new Image();
     img.src = "{{ url_for('video_feed') }}";
