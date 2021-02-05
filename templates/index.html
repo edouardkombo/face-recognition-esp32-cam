@@ -1,67 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Face Recognition for ESP35App</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
-  <style>
-    video {
-      border: 3px solid #ccc;
-      background: green;
-      width: 400px;
-      height: 400px
-    }
-  </style>
+  <head>
+    <title>Video Streaming </title>
 </head>
-
 <body>
-
-<div class = "container">
-    <div class = "starter-template">
-        <h1>Face Recognition for ESP32 Cam</h1>
+    <div>
+        <h1>Image</h1>
+        <img id="img" src="{{ url_for('video_feed') }}">
     </div>
-</div>
+    <div>
+        <h1>Canvas</h1>
+        <canvas id="canvas" width="640px" height="480px"></canvas>
+    </div>
 
-       <button onCLick="getStream()">Start camera</button>
-           <br/>
-           <video></video>
-           <script>
-                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                     console.log("getUserMedia() not supported.");
-                     return;
-                }
-                var btn = document.querySelector('button');
-               
-                btn.onclick=function(e) {
-            navigator.mediaDevices.getUserMedia({ audio: true, video: true })
-                         .then(function(stream) {
-                             var video = document.querySelector('video');
-                             if ("srcObject" in video) {
-                                 video.srcObject = stream;
-                             } else {
-                                 video.src = window.URL.createObjectURL(stream);
-                             }
-                             video.onloadedmetadata = function(e) {
-                                 video.play();
-                             };
-                        })
-                          .catch(function(err) {
-                               console.log(err.name + ": " + err.message);
-                           });
-                };
- 
-function getStream() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("demo").innerHTML =
-      this.responseText;
-    }
-  };
-  xhttp.open("GET", "/stream", true);
-  xhttp.send();
-}               
-           </script> 
+<script >
+    var ctx = document.getElementById("canvas").getContext('2d');
+    var img = new Image();
+    img.src = "{{ url_for('video_feed') }}";
+
+    // need only for static image
+    //img.onload = function(){   
+    //    ctx.drawImage(img, 0, 0);
+    //};
+
+    // need only for animated image
+    function refreshCanvas(){
+        ctx.drawImage(img, 0, 0);
+    };
+    window.setInterval("refreshCanvas()", 50);
+
+</script>
 
 </body>
 </html>
