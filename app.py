@@ -3,7 +3,7 @@ from flask import Flask,jsonify,request,render_template
 import cv2
 import numpy as np
 
-app = FLask(__name__)
+app = Flask(__name__)
 
 @app.route('/')
 def home():
